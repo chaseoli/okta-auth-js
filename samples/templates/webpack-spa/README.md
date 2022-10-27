@@ -1,1 +1,0 @@
-{{> spa/README.md }}
