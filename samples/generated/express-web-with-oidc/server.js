@@ -42,7 +42,7 @@ const app = express();
 app.use(express.static('./public'));
 app.use(express.urlencoded());
 app.post('/login', function(req, res) {
-  const issuer = req.body.issuer;
+  const issuer = process.env.OKTA_ISSUER
   const username = req.body.username;
   const password = req.body.password;
   let authClient;
@@ -67,8 +67,8 @@ app.post('/login', function(req, res) {
     error = transaction.error;
     sessionToken = transaction.sessionToken;
 
-    const clientId = req.body.clientId;
-    const clientSecret = req.body.clientSecret;
+    const clientId = process.env.OKTA_CLIENTID;
+    const clientSecret =  process.env.OKTA_CLIENTSECRET
     const state = JSON.stringify({
       username,
       issuer,
@@ -172,5 +172,5 @@ app.get('/authorization-code/callback', function(req, res) {
   post.end();
 });
 app.listen(port, function () {
-  console.log(`Test app running at http://localhost:${port}!\n`);
+  console.log(`Test app running at http://localhost:${port}\n`);
 });
